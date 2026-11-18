@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-navy: #12345A;
+  --color-navy-dark: #0D2744;
+  --color-green: #16A36A;
+  --color-green-light: #EAF6EF;
+  --color-light-grey: #F3F6FA;
+  --color-blue-light: #EAF0F7;
+  --color-charcoal: #202B38;
+  --color-muted: #64748B;
+  --color-border: #E2E8F0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  color: #202B38;
+  background-color: #FFFFFF;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+::selection {
+  background-color: #12345A;
+  color: #FFFFFF;
+}
+
+/* Institutional focus ring */
+*:focus-visible {
+  outline: 2px solid #16A36A;
+  outline-offset: 2px;
+}
+
+/* Restrained typography styles */
+h1, h2, h3, h4, h5, h6 {
+  color: #12345A;
+  letter-spacing: -0.02em;
+}
+
+/* Clean enterprise table and card styles */
+.institutional-border {
+  border: 1px solid #E2E8F0;
+}
+
+.institutional-card {
+  background-color: #FFFFFF;
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.institutional-card:hover {
+  border-color: #CBD5E1;
+  box-shadow: 0 8px 24px 0 rgba(18, 52, 90, 0.06);
+}

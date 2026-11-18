@@ -1,0 +1,17 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/enquiry/route": "app/api/enquiry/route.js",
+  "/robots.txt/route": "app/robots.txt/route.js",
+  "/sitemap.xml/route": "app/sitemap.xml/route.js",
+  "/process/page": "app/process/page.js",
+  "/quote/page": "app/quote/page.js",
+  "/contact/page": "app/contact/page.js",
+  "/about/page": "app/about/page.js",
+  "/solutions/it-infrastructure/page": "app/solutions/it-infrastructure/page.js",
+  "/page": "app/page.js",
+  "/solutions/security-surveillance/page": "app/solutions/security-surveillance/page.js",
+  "/solutions/student-essentials/page": "app/solutions/student-essentials/page.js",
+  "/solutions/networking-solutions/page": "app/solutions/networking-solutions/page.js",
+  "/solutions/amc-support/page": "app/solutions/amc-support/page.js",
+  "/icon/route": "app/icon/route.js"
+}
