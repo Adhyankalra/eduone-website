@@ -6,6 +6,7 @@ import { SITE_CONFIG } from "@/lib/constants";
 import { MessageSquare } from "lucide-react";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://eduone.in"),
   title: {
     default: `${SITE_CONFIG.name} – Complete School Solutions | Delhi NCR`,
     template: `%s | ${SITE_CONFIG.name} Complete School Solutions`,
