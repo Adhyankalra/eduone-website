@@ -308,7 +308,7 @@ export default function PrivacyPolicyPage() {
                 <div className="flex items-center gap-2">
                   <Phone className="w-4 h-4 text-edu-green shrink-0" />
                   <span>Contact Number: </span>
-                  <a href={`tel:${SITE_CONFIG.phone}`} className="font-semibold text-edu-navy hover:underline">
+                  <a href={`tel:${SITE_CONFIG.phone.replace(/\s+/g, "")}`} className="font-semibold text-edu-navy hover:underline">
                     {SITE_CONFIG.phone}
                   </a>
                 </div>

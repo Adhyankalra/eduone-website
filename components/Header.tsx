@@ -79,7 +79,7 @@ export default function Header() {
               <span>{SITE_CONFIG.email}</span>
             </a>
             <a
-              href={`tel:${SITE_CONFIG.phone}`}
+              href={`tel:${SITE_CONFIG.phone.replace(/\s+/g, "")}`}
               className="flex items-center gap-1.5 text-slate-300 hover:text-white transition-colors"
             >
               <Phone className="w-3.5 h-3.5 text-edu-green" />
@@ -334,8 +334,12 @@ export default function Header() {
                 Request an Institutional Quote
               </Link>
               <div className="text-center text-xs text-edu-muted pt-2 flex flex-col gap-1">
-                <span>{SITE_CONFIG.phone}</span>
-                <span>{SITE_CONFIG.email}</span>
+                <a href={`tel:${SITE_CONFIG.phone.replace(/\s+/g, "")}`} className="hover:text-edu-navy font-semibold text-edu-charcoal">
+                  {SITE_CONFIG.phone}
+                </a>
+                <a href={`mailto:${SITE_CONFIG.email}`} className="hover:text-edu-navy">
+                  {SITE_CONFIG.email}
+                </a>
                 <span>{SITE_CONFIG.coverage}</span>
               </div>
             </div>

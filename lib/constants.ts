@@ -10,8 +10,8 @@ export const SITE_CONFIG = {
   region: "Delhi NCR, India",
   coverage: "Delhi • Noida • Gurugram • Faridabad • Ghaziabad",
   email: "cyber.itsolutions@gmail.com",
-  phone: "+91 99110 99529",
-  whatsappNumber: "919911099529",
+  phone: "+91 98110 99529",
+  whatsappNumber: "919811099529",
   whatsappDefaultMessage: "Hello EDUONE, I would like to enquire about school procurement and infrastructure solutions.",
   address: "Delhi NCR, India",
 };

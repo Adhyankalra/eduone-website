@@ -159,8 +159,8 @@ export const SITE_CONFIG = {
   name: "EDUONE",
   fullName: "EDUONE – Complete School Solutions",
   email: "cyber.itsolutions@gmail.com",
-  phone: "+91 99110 99529",
-  whatsappNumber: "919911099529",
+  phone: "+91 98110 99529",
+  whatsappNumber: "919811099529",
   address: "Institutional Area, Delhi NCR, India",
   coverage: "Delhi • Noida • Gurugram • Faridabad • Ghaziabad",
   // ...

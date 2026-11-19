@@ -17,7 +17,7 @@ import { SITE_CONFIG } from "@/lib/constants";
 export const metadata = {
   title: "Contact Us | EDUONE – Complete School Solutions",
   description:
-    "Connect directly with EDUONE – Complete School Solutions in Delhi NCR. Call +91 99110 99529 or email cyber.itsolutions@gmail.com for school uniforms, IT hardware, CCTV surveillance and maintenance support.",
+    "Connect directly with EDUONE – Complete School Solutions in Delhi NCR. Call +91 98110 99529 or email cyber.itsolutions@gmail.com for school uniforms, IT hardware, CCTV surveillance and maintenance support.",
 };
 
 export default function ContactPage() {
@@ -51,7 +51,7 @@ export default function ContactPage() {
 
             <div className="pt-2 flex flex-wrap items-center gap-4 text-xs font-medium text-slate-300">
               <a
-                href={`tel:${SITE_CONFIG.phone}`}
+                href={`tel:${SITE_CONFIG.phone.replace(/\s+/g, "")}`}
                 className="flex items-center gap-1.5 hover:text-white transition-colors"
               >
                 <Phone className="w-3.5 h-3.5 text-edu-green" />
@@ -108,7 +108,7 @@ export default function ContactPage() {
                         Contact Number
                       </div>
                       <a
-                        href={`tel:${SITE_CONFIG.phone}`}
+                        href={`tel:${SITE_CONFIG.phone.replace(/\s+/g, "")}`}
                         className="font-bold text-base text-edu-navy hover:text-edu-navy-dark hover:underline block mt-0.5"
                       >
                         {SITE_CONFIG.phone}
@@ -168,7 +168,7 @@ export default function ContactPage() {
                     className="w-full inline-flex items-center justify-center gap-2 bg-edu-green hover:bg-edu-green-hover text-white text-sm font-semibold py-3.5 px-4 rounded-btn transition-colors shadow-subtle"
                   >
                     <MessageSquare className="w-4 h-4" />
-                    <span>Open WhatsApp Chat: +91 99110 99529</span>
+                    <span>Open WhatsApp Chat: +91 98110 99529</span>
                   </a>
                 </div>
               </div>

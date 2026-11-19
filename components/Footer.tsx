@@ -95,7 +95,7 @@ export default function Footer() {
                 className="inline-flex items-center gap-2 bg-edu-green hover:bg-edu-green-hover text-white text-xs font-semibold px-4 py-2.5 rounded-btn transition-colors"
               >
                 <MessageSquare className="w-4 h-4" />
-                <span>Direct WhatsApp: +91 99110 99529</span>
+                <span>Direct WhatsApp: +91 98110 99529</span>
               </a>
             </div>
           </div>
@@ -195,7 +195,7 @@ export default function Footer() {
               <div className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-edu-green shrink-0" />
                 <a
-                  href={`tel:${SITE_CONFIG.phone}`}
+                  href={`tel:${SITE_CONFIG.phone.replace(/\s+/g, "")}`}
                   className="hover:text-white transition-colors font-medium"
                 >
                   {SITE_CONFIG.phone}

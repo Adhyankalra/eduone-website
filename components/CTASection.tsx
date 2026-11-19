@@ -78,7 +78,7 @@ export default function CTASection({
             </span>
             <span className="flex items-center gap-1.5">
               <Phone className="w-3.5 h-3.5 text-edu-green" />
-              <a href={`tel:${SITE_CONFIG.phone}`} className="hover:text-white underline">
+              <a href={`tel:${SITE_CONFIG.phone.replace(/\s+/g, "")}`} className="hover:text-white underline font-medium">
                 Call {SITE_CONFIG.phone}
               </a>
             </span>

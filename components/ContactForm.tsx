@@ -121,7 +121,7 @@ export default function ContactForm() {
         const errorData = await response.json().catch(() => ({}));
         setServerError(
           errorData.error ||
-            "Unable to submit your enquiry at this moment. Please reach our coordinator directly at cyber.itsolutions@gmail.com or +91 99110 99529."
+            "Unable to submit your enquiry at this moment. Please reach our coordinator directly at cyber.itsolutions@gmail.com or +91 98110 99529."
         );
       }
     } catch {
@@ -426,7 +426,7 @@ Requirement: ${formData.message || "I would like to discuss our requirements."}`
           className="text-xs font-semibold text-edu-green hover:underline flex items-center gap-1.5"
         >
           <MessageSquare className="w-4 h-4" />
-          <span>Prefer WhatsApp? Message +91 99110 99529</span>
+          <span>Prefer WhatsApp? Message +91 98110 99529</span>
         </a>
       </div>
     </form>
