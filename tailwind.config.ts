@@ -10,13 +10,13 @@ const config: Config = {
     extend: {
       colors: {
         edu: {
-          navy: "#12345A",
-          "navy-dark": "#0D2744",
-          "navy-hover": "#0f2c4d",
+          navy: "#102D4D",
+          "navy-dark": "#0A1E35",
+          "navy-hover": "#0C233C",
           green: "#16A36A",
           "green-hover": "#138858",
           "green-light": "#EAF6EF",
-          "light-grey": "#F3F6FA",
+          "light-grey": "#F4F7FA",
           "blue-light": "#EAF0F7",
           charcoal: "#202B38",
           muted: "#64748B",
@@ -33,6 +33,8 @@ const config: Config = {
           "sans-serif",
         ],
         heading: [
+          "Manrope",
+          "Plus Jakarta Sans",
           "Inter",
           "-apple-system",
           "BlinkMacSystemFont",
@@ -45,9 +47,9 @@ const config: Config = {
         panel: "16px",
       },
       boxShadow: {
-        subtle: "0 1px 3px 0 rgba(18, 52, 90, 0.05), 0 1px 2px 0 rgba(18, 52, 90, 0.03)",
-        card: "0 2px 8px 0 rgba(18, 52, 90, 0.04), 0 1px 2px 0 rgba(18, 52, 90, 0.02)",
-        "card-hover": "0 8px 24px 0 rgba(18, 52, 90, 0.08), 0 2px 6px 0 rgba(18, 52, 90, 0.04)",
+        subtle: "0 1px 3px 0 rgba(16, 45, 77, 0.05), 0 1px 2px 0 rgba(16, 45, 77, 0.03)",
+        card: "0 2px 8px 0 rgba(16, 45, 77, 0.04), 0 1px 2px 0 rgba(16, 45, 77, 0.02)",
+        "card-hover": "0 8px 24px 0 rgba(16, 45, 77, 0.08), 0 2px 6px 0 rgba(16, 45, 77, 0.04)",
       },
     },
   },

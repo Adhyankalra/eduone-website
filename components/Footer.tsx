@@ -72,7 +72,7 @@ export default function Footer() {
                 E<span className="text-edu-green">1</span>
               </div>
               <div className="flex flex-col">
-                <span className="text-xl font-black text-white tracking-tight">
+                <span className="text-xl font-black text-white tracking-tight font-heading">
                   EDU<span className="text-edu-green">ONE</span>
                 </span>
                 <span className="text-[9px] font-semibold tracking-[0.2em] text-slate-400 uppercase">
@@ -95,14 +95,14 @@ export default function Footer() {
                 className="inline-flex items-center gap-2 bg-edu-green hover:bg-edu-green-hover text-white text-xs font-semibold px-4 py-2.5 rounded-btn transition-colors"
               >
                 <MessageSquare className="w-4 h-4" />
-                <span>Direct WhatsApp Enquiry</span>
+                <span>Direct WhatsApp: +91 99110 99529</span>
               </a>
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4">
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4 font-heading">
               Company
             </h4>
             <ul className="space-y-2.5 text-sm">
@@ -127,7 +127,7 @@ export default function Footer() {
                   href="/process"
                   className="text-slate-300 hover:text-white transition-colors"
                 >
-                  Our 6-Step Process
+                  Our Process
                 </Link>
               </li>
               <li>
@@ -143,7 +143,15 @@ export default function Footer() {
                   href="/quote"
                   className="text-slate-300 hover:text-white transition-colors"
                 >
-                  Request a Formal Quote
+                  Request a Quote
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/privacy-policy"
+                  className="text-slate-300 hover:text-white transition-colors font-medium flex items-center gap-1.5"
+                >
+                  <span>Privacy Policy</span>
                 </Link>
               </li>
             </ul>
@@ -151,7 +159,7 @@ export default function Footer() {
 
           {/* Solutions Links */}
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4">
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4 font-heading">
               Solutions
             </h4>
             <ul className="space-y-2.5 text-sm">
@@ -170,7 +178,7 @@ export default function Footer() {
 
           {/* Contact & Regional Office */}
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4">
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-4 font-heading">
               Institutional Desk
             </h4>
             <div className="space-y-3 text-sm text-slate-300">
@@ -188,7 +196,7 @@ export default function Footer() {
                 <Phone className="w-4 h-4 text-edu-green shrink-0" />
                 <a
                   href={`tel:${SITE_CONFIG.phone}`}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-white transition-colors font-medium"
                 >
                   {SITE_CONFIG.phone}
                 </a>
@@ -197,7 +205,7 @@ export default function Footer() {
                 <Mail className="w-4 h-4 text-edu-green shrink-0" />
                 <a
                   href={`mailto:${SITE_CONFIG.email}`}
-                  className="hover:text-white transition-colors"
+                  className="hover:text-white transition-colors break-all"
                 >
                   {SITE_CONFIG.email}
                 </a>
@@ -208,7 +216,7 @@ export default function Footer() {
                   href="/quote"
                   className="inline-flex items-center gap-1.5 text-xs text-edu-green hover:underline font-semibold"
                 >
-                  Submit RFP / Tender Spec <ArrowRight className="w-3.5 h-3.5" />
+                  Submit Institutional RFP <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
             </div>
@@ -217,10 +225,18 @@ export default function Footer() {
 
         {/* Legal & Disclaimer */}
         <div className="mt-12 pt-8 border-t border-white/10 text-xs text-slate-400 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p>
-            &copy; {new Date().getFullYear()} EDUONE. All rights reserved. Registered
-            procurement & technology coordinator for educational institutions.
-          </p>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <p>
+              &copy; {new Date().getFullYear()} EDUONE – Complete School Solutions. All rights reserved.
+            </p>
+            <span>•</span>
+            <Link
+              href="/privacy-policy"
+              className="text-slate-300 hover:text-white underline transition-colors"
+            >
+              Privacy Policy
+            </Link>
+          </div>
           <p className="text-[11px] text-slate-400 text-center md:text-right">
             EDUONE simplifies school procurement by coordinating products, vetted
             vendors, installation and after-sales support through a single point of

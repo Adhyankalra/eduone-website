@@ -157,10 +157,10 @@ Open `lib/constants.ts` to adjust phone numbers, official email addresses, cover
 ```typescript
 export const SITE_CONFIG = {
   name: "EDUONE",
-  fullName: "EDUONE – COMPLETE SCHOOL SOLUTIONS",
-  email: "enquiry@eduone.in",
-  phone: "+91 98110 00000",
-  whatsappNumber: "919811000000",
+  fullName: "EDUONE – Complete School Solutions",
+  email: "cyber.itsolutions@gmail.com",
+  phone: "+91 99110 99529",
+  whatsappNumber: "919911099529",
   address: "Institutional Area, Delhi NCR, India",
   coverage: "Delhi • Noida • Gurugram • Faridabad • Ghaziabad",
   // ...

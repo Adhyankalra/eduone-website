@@ -1,108 +1,144 @@
 "use client";
 
 import React, { useState } from "react";
-import { Check, AlertCircle, Send, CheckCircle2, MessageSquare } from "lucide-react";
+import Link from "next/link";
+import {
+  AlertCircle,
+  Send,
+  CheckCircle2,
+  MessageSquare,
+  ShieldCheck,
+  ChevronDown,
+} from "lucide-react";
 import { SITE_CONFIG } from "@/lib/constants";
 
 const SERVICE_OPTIONS = [
-  "Student Essentials (Uniforms, Bags, ID)",
-  "IT & Infrastructure (Computers, Smart Boards)",
-  "CCTV & Campus Surveillance",
-  "Networking & Campus Wi-Fi",
-  "AMC & Technical Maintenance",
-  "Comprehensive All-in-One School Package",
+  "School Uniforms & Student Essentials",
+  "IT Infrastructure",
+  "CCTV & Security Solutions",
+  "Networking Solutions",
+  "Smart Classrooms",
+  "AMC & Technical Support",
+  "Complete School Solutions",
+  "Other",
 ];
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
-    institutionName: "",
-    contactPerson: "",
-    designation: "",
-    phone: "",
-    email: "",
-    city: "Delhi NCR",
-    services: [] as string[],
-    estimatedRequirement: "",
+    fullName: "",
+    schoolName: "",
+    workEmail: "",
+    contactNumber: "",
+    serviceRequired: "Complete School Solutions",
     message: "",
+    agreeToPolicy: true,
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-
-  const toggleService = (service: string) => {
-    setFormData((prev) => {
-      const exists = prev.services.includes(service);
-      return {
-        ...prev,
-        services: exists
-          ? prev.services.filter((s) => s !== service)
-          : [...prev.services, service],
-      };
-    });
-  };
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [referenceId, setReferenceId] = useState<string>("");
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
-    if (!formData.institutionName.trim()) {
-      newErrors.institutionName = "School / Institution Name is required.";
+
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = "Full name is required.";
     }
-    if (!formData.contactPerson.trim()) {
-      newErrors.contactPerson = "Contact person name is required.";
+
+    if (!formData.schoolName.trim()) {
+      newErrors.schoolName = "School / Organisation name is required.";
     }
-    if (!formData.phone.trim()) {
-      newErrors.phone = "Phone number is required.";
-    } else if (!/^[0-9+\s-]{8,15}$/.test(formData.phone.trim())) {
-      newErrors.phone = "Please enter a valid phone number.";
+
+    if (!formData.workEmail.trim()) {
+      newErrors.workEmail = "Work email address is required.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.workEmail.trim())) {
+      newErrors.workEmail = "Please enter a valid official email address.";
     }
-    if (!formData.email.trim()) {
-      newErrors.email = "Official email address is required.";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address.";
+
+    if (!formData.contactNumber.trim()) {
+      newErrors.contactNumber = "Contact number is required.";
+    } else if (!/^[0-9+\s-]{8,15}$/.test(formData.contactNumber.trim())) {
+      newErrors.contactNumber = "Please enter a valid 10-digit phone number.";
     }
-    if (formData.services.length === 0) {
-      newErrors.services = "Please select at least one required service category.";
+
+    if (!formData.serviceRequired) {
+      newErrors.serviceRequired = "Please select a service category.";
     }
+
+    if (!formData.message.trim()) {
+      newErrors.message = "Please describe your project or procurement requirements.";
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = "Please provide a few more details (minimum 10 characters).";
+    }
+
+    if (!formData.agreeToPolicy) {
+      newErrors.agreeToPolicy = "Please review and acknowledge the Privacy Policy to proceed.";
+    }
+
     return newErrors;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setServerError(null);
+
     const validationErrors = validate();
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
       return;
     }
+
     setErrors({});
     setIsSubmitting(true);
 
     try {
-      // Send to internal API route
       const response = await fetch("/api/enquiry", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          fullName: formData.fullName.trim(),
+          contactPerson: formData.fullName.trim(),
+          schoolName: formData.schoolName.trim(),
+          institutionName: formData.schoolName.trim(),
+          workEmail: formData.workEmail.trim(),
+          email: formData.workEmail.trim(),
+          contactNumber: formData.contactNumber.trim(),
+          phone: formData.contactNumber.trim(),
+          serviceRequired: formData.serviceRequired,
+          services: [formData.serviceRequired],
+          message: formData.message.trim(),
+          source: "Contact Us Page Form",
+        }),
       });
 
       if (response.ok) {
+        const result = await response.json().catch(() => ({}));
+        setReferenceId(result.enquiryId || `EDU-${Date.now().toString(36).toUpperCase()}`);
         setIsSuccess(true);
       } else {
-        // Fallback simulate local save
-        setIsSuccess(true);
+        const errorData = await response.json().catch(() => ({}));
+        setServerError(
+          errorData.error ||
+            "Unable to submit your enquiry at this moment. Please reach our coordinator directly at cyber.itsolutions@gmail.com or +91 99110 99529."
+        );
       }
     } catch {
-      // Graceful offline fallback
-      setIsSuccess(true);
+      setServerError(
+        "A network connection error occurred while sending your enquiry. Please check your internet connection or reach us directly via WhatsApp / phone."
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const whatsappMessage = `Institutional Enquiry from ${formData.institutionName || "School"}:
-Contact: ${formData.contactPerson} (${formData.designation || "Staff"})
-Phone: ${formData.phone}
-Services: ${formData.services.join(", ") || "General Enquiry"}
-Requirement: ${formData.estimatedRequirement || "Discussion requested"}`;
+  const whatsappMessage = `Hello EDUONE,
+I am reaching out from ${formData.schoolName || "my school/institution"}.
+Name: ${formData.fullName || "Representative"}
+Phone: ${formData.contactNumber || "N/A"}
+Service: ${formData.serviceRequired}
+Requirement: ${formData.message || "I would like to discuss our requirements."}`;
 
   const whatsappUrl = `https://wa.me/${SITE_CONFIG.whatsappNumber}?text=${encodeURIComponent(
     whatsappMessage
@@ -110,47 +146,56 @@ Requirement: ${formData.estimatedRequirement || "Discussion requested"}`;
 
   if (isSuccess) {
     return (
-      <div className="institutional-card p-8 bg-white border border-edu-border text-center space-y-5">
-        <div className="w-14 h-14 bg-edu-green-light text-edu-green rounded-full flex items-center justify-center mx-auto">
-          <CheckCircle2 className="w-8 h-8" />
+      <div className="institutional-card p-8 sm:p-10 bg-white border border-edu-border text-center space-y-6">
+        <div className="w-16 h-16 bg-edu-green-light text-edu-green rounded-full flex items-center justify-center mx-auto border border-edu-green/20">
+          <CheckCircle2 className="w-9 h-9" />
         </div>
-        <div>
-          <h3 className="text-2xl font-bold text-edu-navy">
+
+        <div className="space-y-2">
+          <span className="text-[11px] font-bold text-edu-green uppercase tracking-wider font-mono">
+            Reference ID: {referenceId}
+          </span>
+          <h3 className="text-2xl font-bold text-edu-navy font-heading">
             Enquiry Received Successfully
           </h3>
-          <p className="mt-2 text-sm text-edu-muted max-w-md mx-auto leading-relaxed">
-            Thank you, <span className="font-semibold text-edu-navy">{formData.contactPerson}</span>.
-            Our Delhi NCR institutional coordinator will review your requirements for{" "}
-            <span className="font-semibold text-edu-navy">{formData.institutionName}</span>{" "}
-            and respond within 1 business day.
+          <p className="text-sm text-edu-muted max-w-lg mx-auto leading-relaxed">
+            Thank you, <span className="font-semibold text-edu-navy">{formData.fullName}</span>.
+            Your requirement for{" "}
+            <span className="font-semibold text-edu-navy">{formData.schoolName}</span> has been
+            logged on our institutional coordination desk.
           </p>
         </div>
 
-        <div className="p-4 bg-edu-light-grey rounded-btn text-xs text-edu-charcoal text-left max-w-md mx-auto border border-edu-border space-y-1">
-          <div className="font-semibold text-edu-navy">Summary of Submitted Details:</div>
-          <div>• Institution: {formData.institutionName}</div>
-          <div>• Contact: {formData.contactPerson} ({formData.designation})</div>
-          <div>• Phone: {formData.phone} | Email: {formData.email}</div>
-          <div>• Services: {formData.services.join(", ")}</div>
+        <div className="p-5 bg-edu-light-grey rounded-btn text-xs text-edu-charcoal text-left max-w-md mx-auto border border-edu-border space-y-2">
+          <div className="font-bold text-edu-navy border-b border-edu-border pb-1.5 flex items-center justify-between">
+            <span>Submitted Specification Summary</span>
+            <span className="text-edu-green font-semibold">Active</span>
+          </div>
+          <div>• <strong>Institution:</strong> {formData.schoolName}</div>
+          <div>• <strong>Contact:</strong> {formData.fullName} ({formData.contactNumber})</div>
+          <div>• <strong>Official Email:</strong> {formData.workEmail}</div>
+          <div>• <strong>Service Required:</strong> {formData.serviceRequired}</div>
+          <div className="text-edu-muted pt-1 text-[11px]">
+            Our Delhi NCR representative will review your scope and respond within 1 business day.
+          </div>
         </div>
 
         <div className="pt-2 flex flex-col sm:flex-row justify-center gap-3">
           <button
+            type="button"
             onClick={() => {
               setIsSuccess(false);
               setFormData({
-                institutionName: "",
-                contactPerson: "",
-                designation: "",
-                phone: "",
-                email: "",
-                city: "Delhi NCR",
-                services: [],
-                estimatedRequirement: "",
+                fullName: "",
+                schoolName: "",
+                workEmail: "",
+                contactNumber: "",
+                serviceRequired: "Complete School Solutions",
                 message: "",
+                agreeToPolicy: true,
               });
             }}
-            className="text-xs font-semibold px-4 py-2.5 rounded-btn border border-edu-border text-edu-navy hover:bg-edu-light-grey transition-colors"
+            className="text-xs font-semibold px-5 py-2.5 rounded-btn border border-edu-border text-edu-navy hover:bg-edu-light-grey transition-colors"
           >
             Submit Another Requirement
           </button>
@@ -158,7 +203,7 @@ Requirement: ${formData.estimatedRequirement || "Discussion requested"}`;
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-1.5 text-xs font-semibold px-4 py-2.5 rounded-btn bg-edu-green text-white hover:bg-edu-green-hover transition-colors"
+            className="inline-flex items-center justify-center gap-1.5 text-xs font-semibold px-5 py-2.5 rounded-btn bg-edu-green text-white hover:bg-edu-green-hover transition-colors shadow-subtle"
           >
             <MessageSquare className="w-3.5 h-3.5" />
             <span>Fast-track via WhatsApp</span>
@@ -171,231 +216,204 @@ Requirement: ${formData.estimatedRequirement || "Discussion requested"}`;
   return (
     <form
       onSubmit={handleSubmit}
-      className="institutional-card p-6 sm:p-8 bg-white border border-edu-border space-y-6"
+      className="institutional-card p-6 sm:p-8 lg:p-10 bg-white border border-edu-border space-y-6"
+      noValidate
     >
-      <div>
-        <h3 className="text-xl font-bold text-edu-navy">
+      <div className="border-b border-edu-border pb-4">
+        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-edu-blue-light text-edu-navy text-[11px] font-semibold uppercase tracking-wider mb-2 border border-edu-border">
+          <ShieldCheck className="w-3.5 h-3.5 text-edu-green" />
+          Institutional Inquiry Desk
+        </div>
+        <h3 className="text-xl sm:text-2xl font-bold text-edu-navy font-heading">
           Institutional Requirement Form
         </h3>
-        <p className="text-xs text-edu-muted mt-1">
-          Please provide your institution details. Our regional coordinator will connect
-          with recommended specifications and commercial terms.
+        <p className="text-xs sm:text-sm text-edu-muted mt-1 leading-relaxed">
+          Please fill in your institution and project specifications below. Our Delhi NCR
+          procurement coordinator will review and respond with commercial and technical details.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {/* School Name */}
-        <div className="sm:col-span-2">
-          <label className="block text-xs font-semibold text-edu-navy uppercase tracking-wider mb-1">
-            School / Institution Name <span className="text-red-500">*</span>
+      {serverError && (
+        <div className="p-4 bg-red-50 border border-red-200 rounded-btn text-xs text-red-700 flex items-start gap-2.5 animate-in fade-in">
+          <AlertCircle className="w-4 h-4 text-red-600 shrink-0 mt-0.5" />
+          <div className="flex-1">
+            <strong className="block font-semibold">Submission Error</strong>
+            <span>{serverError}</span>
+          </div>
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+        {/* Full Name */}
+        <div>
+          <label className="block text-xs font-semibold text-edu-navy uppercase tracking-wider mb-1.5">
+            Full Name <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
-            placeholder="e.g. Delhi Public School / St. Mary's Academy"
-            value={formData.institutionName}
-            onChange={(e) =>
-              setFormData({ ...formData, institutionName: e.target.value })
-            }
+            placeholder="e.g. Dr. Rajesh Sharma / Anita Mehra"
+            value={formData.fullName}
+            onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
             className={`w-full px-3.5 py-2.5 text-sm rounded-btn border ${
-              errors.institutionName ? "border-red-400" : "border-edu-border"
+              errors.fullName ? "border-red-400 bg-red-50/20" : "border-edu-border bg-white"
             } focus:border-edu-navy focus:ring-1 focus:ring-edu-navy`}
           />
-          {errors.institutionName && (
+          {errors.fullName && (
             <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
-              <AlertCircle className="w-3 h-3" /> {errors.institutionName}
+              <AlertCircle className="w-3 h-3" /> {errors.fullName}
             </p>
           )}
         </div>
 
-        {/* Contact Person */}
+        {/* School / Organisation Name */}
         <div>
-          <label className="block text-xs font-semibold text-edu-navy uppercase tracking-wider mb-1">
-            Contact Person Name <span className="text-red-500">*</span>
+          <label className="block text-xs font-semibold text-edu-navy uppercase tracking-wider mb-1.5">
+            School / Organisation Name <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
-            placeholder="Full Name"
-            value={formData.contactPerson}
-            onChange={(e) =>
-              setFormData({ ...formData, contactPerson: e.target.value })
-            }
+            placeholder="e.g. Modern Public School / St. Xavier's"
+            value={formData.schoolName}
+            onChange={(e) => setFormData({ ...formData, schoolName: e.target.value })}
             className={`w-full px-3.5 py-2.5 text-sm rounded-btn border ${
-              errors.contactPerson ? "border-red-400" : "border-edu-border"
+              errors.schoolName ? "border-red-400 bg-red-50/20" : "border-edu-border bg-white"
             } focus:border-edu-navy focus:ring-1 focus:ring-edu-navy`}
           />
-          {errors.contactPerson && (
+          {errors.schoolName && (
             <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
-              <AlertCircle className="w-3 h-3" /> {errors.contactPerson}
+              <AlertCircle className="w-3 h-3" /> {errors.schoolName}
             </p>
           )}
         </div>
 
-        {/* Designation */}
+        {/* Work Email */}
         <div>
-          <label className="block text-xs font-semibold text-edu-navy uppercase tracking-wider mb-1">
-            Designation / Role
-          </label>
-          <input
-            type="text"
-            placeholder="e.g. Principal / Trustee / IT Head"
-            value={formData.designation}
-            onChange={(e) =>
-              setFormData({ ...formData, designation: e.target.value })
-            }
-            className="w-full px-3.5 py-2.5 text-sm rounded-btn border border-edu-border focus:border-edu-navy focus:ring-1 focus:ring-edu-navy"
-          />
-        </div>
-
-        {/* Phone */}
-        <div>
-          <label className="block text-xs font-semibold text-edu-navy uppercase tracking-wider mb-1">
-            Phone / Mobile Number <span className="text-red-500">*</span>
-          </label>
-          <input
-            type="tel"
-            placeholder="+91 98XXX XXXXX"
-            value={formData.phone}
-            onChange={(e) =>
-              setFormData({ ...formData, phone: e.target.value })
-            }
-            className={`w-full px-3.5 py-2.5 text-sm rounded-btn border ${
-              errors.phone ? "border-red-400" : "border-edu-border"
-            } focus:border-edu-navy focus:ring-1 focus:ring-edu-navy`}
-          />
-          {errors.phone && (
-            <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
-              <AlertCircle className="w-3 h-3" /> {errors.phone}
-            </p>
-          )}
-        </div>
-
-        {/* Email */}
-        <div>
-          <label className="block text-xs font-semibold text-edu-navy uppercase tracking-wider mb-1">
-            Official Email Address <span className="text-red-500">*</span>
+          <label className="block text-xs font-semibold text-edu-navy uppercase tracking-wider mb-1.5">
+            Work Email Address <span className="text-red-500">*</span>
           </label>
           <input
             type="email"
             placeholder="principal@school.edu.in"
-            value={formData.email}
-            onChange={(e) =>
-              setFormData({ ...formData, email: e.target.value })
-            }
+            value={formData.workEmail}
+            onChange={(e) => setFormData({ ...formData, workEmail: e.target.value })}
             className={`w-full px-3.5 py-2.5 text-sm rounded-btn border ${
-              errors.email ? "border-red-400" : "border-edu-border"
+              errors.workEmail ? "border-red-400 bg-red-50/20" : "border-edu-border bg-white"
             } focus:border-edu-navy focus:ring-1 focus:ring-edu-navy`}
           />
-          {errors.email && (
+          {errors.workEmail && (
             <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
-              <AlertCircle className="w-3 h-3" /> {errors.email}
+              <AlertCircle className="w-3 h-3" /> {errors.workEmail}
             </p>
           )}
         </div>
 
-        {/* City / Location */}
-        <div className="sm:col-span-2">
-          <label className="block text-xs font-semibold text-edu-navy uppercase tracking-wider mb-1">
-            Location / District (Delhi NCR)
+        {/* Contact Number */}
+        <div>
+          <label className="block text-xs font-semibold text-edu-navy uppercase tracking-wider mb-1.5">
+            Contact Number <span className="text-red-500">*</span>
           </label>
-          <select
-            value={formData.city}
-            onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-            className="w-full px-3.5 py-2.5 text-sm rounded-btn border border-edu-border focus:border-edu-navy focus:ring-1 focus:ring-edu-navy bg-white"
-          >
-            <option value="Delhi">Delhi (North, South, East, West, Central)</option>
-            <option value="Noida / Greater Noida">Noida & Greater Noida</option>
-            <option value="Gurugram">Gurugram / Manesar</option>
-            <option value="Faridabad">Faridabad</option>
-            <option value="Ghaziabad">Ghaziabad</option>
-            <option value="Other NCR">Other Delhi NCR Location</option>
-          </select>
+          <input
+            type="tel"
+            placeholder="+91 98XXX XXXXX"
+            value={formData.contactNumber}
+            onChange={(e) => setFormData({ ...formData, contactNumber: e.target.value })}
+            className={`w-full px-3.5 py-2.5 text-sm rounded-btn border ${
+              errors.contactNumber ? "border-red-400 bg-red-50/20" : "border-edu-border bg-white"
+            } focus:border-edu-navy focus:ring-1 focus:ring-edu-navy`}
+          />
+          {errors.contactNumber && (
+            <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+              <AlertCircle className="w-3 h-3" /> {errors.contactNumber}
+            </p>
+          )}
+        </div>
+
+        {/* Service Required (Exact 8 Options) */}
+        <div className="sm:col-span-2">
+          <label className="block text-xs font-semibold text-edu-navy uppercase tracking-wider mb-1.5">
+            Service Required <span className="text-red-500">*</span>
+          </label>
+          <div className="relative">
+            <select
+              value={formData.serviceRequired}
+              onChange={(e) => setFormData({ ...formData, serviceRequired: e.target.value })}
+              className={`w-full px-3.5 py-2.5 text-sm rounded-btn border appearance-none pr-10 ${
+                errors.serviceRequired ? "border-red-400" : "border-edu-border"
+              } bg-white text-edu-charcoal focus:border-edu-navy focus:ring-1 focus:ring-edu-navy`}
+            >
+              {SERVICE_OPTIONS.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
+              ))}
+            </select>
+            <ChevronDown className="w-4 h-4 text-edu-muted absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          </div>
+          {errors.serviceRequired && (
+            <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+              <AlertCircle className="w-3 h-3" /> {errors.serviceRequired}
+            </p>
+          )}
+        </div>
+
+        {/* Message / Project Requirements */}
+        <div className="sm:col-span-2">
+          <label className="block text-xs font-semibold text-edu-navy uppercase tracking-wider mb-1.5">
+            Message / Project Requirements <span className="text-red-500">*</span>
+          </label>
+          <textarea
+            rows={4}
+            placeholder="Please share details such as student strength, required quantities, campus locations, preferred brands or upcoming academic session deadlines..."
+            value={formData.message}
+            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+            className={`w-full px-3.5 py-2.5 text-sm rounded-btn border ${
+              errors.message ? "border-red-400 bg-red-50/20" : "border-edu-border bg-white"
+            } focus:border-edu-navy focus:ring-1 focus:ring-edu-navy`}
+          />
+          {errors.message && (
+            <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+              <AlertCircle className="w-3 h-3" /> {errors.message}
+            </p>
+          )}
+        </div>
+
+        {/* Privacy Policy Agreement */}
+        <div className="sm:col-span-2 pt-1">
+          <label className="flex items-start gap-2.5 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={formData.agreeToPolicy}
+              onChange={(e) => setFormData({ ...formData, agreeToPolicy: e.target.checked })}
+              className="mt-0.5 rounded text-edu-green focus:ring-edu-green border-edu-border"
+            />
+            <span className="text-xs text-edu-muted leading-relaxed">
+              I acknowledge that the information submitted will be processed in accordance with the{" "}
+              <Link href="/privacy-policy" className="text-edu-navy underline font-medium hover:text-edu-navy-dark">
+                EDUONE Privacy Policy
+              </Link>
+              . We do not sell or share your school details with marketing brokers.
+            </span>
+          </label>
+          {errors.agreeToPolicy && (
+            <p className="text-xs text-red-500 mt-1 flex items-center gap-1">
+              <AlertCircle className="w-3 h-3" /> {errors.agreeToPolicy}
+            </p>
+          )}
         </div>
       </div>
 
-      {/* Services Multi-Select */}
-      <div>
-        <label className="block text-xs font-semibold text-edu-navy uppercase tracking-wider mb-2">
-          Required Solution Categories <span className="text-red-500">*</span>
-        </label>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          {SERVICE_OPTIONS.map((service) => {
-            const isChecked = formData.services.includes(service);
-            return (
-              <button
-                type="button"
-                key={service}
-                onClick={() => toggleService(service)}
-                className={`flex items-start gap-2.5 p-3 rounded-btn border text-left text-xs transition-colors ${
-                  isChecked
-                    ? "border-edu-navy bg-edu-blue-light text-edu-navy font-semibold"
-                    : "border-edu-border bg-white text-edu-charcoal hover:bg-edu-light-grey"
-                }`}
-              >
-                <div
-                  className={`w-4 h-4 rounded mt-0.5 flex items-center justify-center shrink-0 border ${
-                    isChecked
-                      ? "bg-edu-navy border-edu-navy text-white"
-                      : "border-edu-border bg-white"
-                  }`}
-                >
-                  {isChecked && <Check className="w-3 h-3 stroke-[3]" />}
-                </div>
-                <span>{service}</span>
-              </button>
-            );
-          })}
-        </div>
-        {errors.services && (
-          <p className="text-xs text-red-500 mt-2 flex items-center gap-1">
-            <AlertCircle className="w-3 h-3" /> {errors.services}
-          </p>
-        )}
-      </div>
-
-      {/* Quantity / Scope */}
-      <div>
-        <label className="block text-xs font-semibold text-edu-navy uppercase tracking-wider mb-1">
-          Estimated Volume / Scope
-        </label>
-        <input
-          type="text"
-          placeholder="e.g. 500 Uniform Sets, 35 Computer Lab Systems, Campus Wi-Fi for 3 Blocks"
-          value={formData.estimatedRequirement}
-          onChange={(e) =>
-            setFormData({ ...formData, estimatedRequirement: e.target.value })
-          }
-          className="w-full px-3.5 py-2.5 text-sm rounded-btn border border-edu-border focus:border-edu-navy focus:ring-1 focus:ring-edu-navy"
-        />
-      </div>
-
-      {/* Message */}
-      <div>
-        <label className="block text-xs font-semibold text-edu-navy uppercase tracking-wider mb-1">
-          Additional Details / Tender Specification Notes
-        </label>
-        <textarea
-          rows={3}
-          placeholder="Please share any particular brand preferences, session deadlines or site visit requirements..."
-          value={formData.message}
-          onChange={(e) =>
-            setFormData({ ...formData, message: e.target.value })
-          }
-          className="w-full px-3.5 py-2.5 text-sm rounded-btn border border-edu-border focus:border-edu-navy focus:ring-1 focus:ring-edu-navy"
-        />
-      </div>
-
-      {/* Actions */}
-      <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4">
+      {/* Form Submission Action */}
+      <div className="pt-3 border-t border-edu-border flex flex-col sm:flex-row items-center justify-between gap-4">
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-edu-navy hover:bg-edu-navy-dark text-white text-sm font-semibold px-6 py-3 rounded-btn transition-colors disabled:opacity-50 shadow-subtle"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-edu-navy hover:bg-edu-navy-dark text-white text-sm font-semibold px-7 py-3.5 rounded-btn transition-colors disabled:opacity-50 shadow-subtle"
         >
           {isSubmitting ? (
-            <span>Transmitting Enquiry...</span>
+            <span>Sending Inquiry...</span>
           ) : (
             <>
-              <span>Submit Formal Enquiry</span>
+              <span>Submit Formal Inquiry</span>
               <Send className="w-4 h-4" />
             </>
           )}
@@ -408,7 +426,7 @@ Requirement: ${formData.estimatedRequirement || "Discussion requested"}`;
           className="text-xs font-semibold text-edu-green hover:underline flex items-center gap-1.5"
         >
           <MessageSquare className="w-4 h-4" />
-          <span>Prefer WhatsApp? Click to message our team</span>
+          <span>Prefer WhatsApp? Message +91 99110 99529</span>
         </a>
       </div>
     </form>

@@ -444,6 +444,15 @@ export default function QuoteForm() {
         </div>
       </div>
 
+      {/* Privacy Notice */}
+      <div className="text-xs text-edu-muted leading-relaxed">
+        By requesting an institutional proposal, you acknowledge that submitted specifications will be processed in accordance with our{" "}
+        <a href="/privacy-policy" className="text-edu-navy underline font-medium hover:text-edu-navy-dark">
+          Privacy Policy
+        </a>
+        . We maintain strict confidentiality of your school's enrollment and technical requirements.
+      </div>
+
       {/* Submit Button */}
       <div className="pt-4 border-t border-edu-border flex flex-col sm:flex-row items-center justify-between gap-4">
         <button

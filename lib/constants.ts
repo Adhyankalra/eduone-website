@@ -1,6 +1,6 @@
 export const SITE_CONFIG = {
   name: "EDUONE",
-  fullName: "EDUONE – COMPLETE SCHOOL SOLUTIONS",
+  fullName: "EDUONE – Complete School Solutions",
   descriptor: "COMPLETE SCHOOL SOLUTIONS",
   tagline: "Everything Your School Needs, Under One Roof.",
   positioning:
@@ -9,11 +9,11 @@ export const SITE_CONFIG = {
     "EDUONE is an integrated procurement and technology solutions partner for private schools and educational institutions in Delhi NCR, India.",
   region: "Delhi NCR, India",
   coverage: "Delhi • Noida • Gurugram • Faridabad • Ghaziabad",
-  email: "enquiry@eduone.in",
-  phone: "+91 98110 00000",
-  whatsappNumber: "919811000000",
+  email: "cyber.itsolutions@gmail.com",
+  phone: "+91 99110 99529",
+  whatsappNumber: "919911099529",
   whatsappDefaultMessage: "Hello EDUONE, I would like to enquire about school procurement and infrastructure solutions.",
-  address: "Institutional Area, Delhi NCR, India",
+  address: "Delhi NCR, India",
 };
 
 export interface SolutionItem {

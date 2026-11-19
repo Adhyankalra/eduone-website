@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --color-navy: #12345A;
-  --color-navy-dark: #0D2744;
+  --color-navy: #102D4D;
+  --color-navy-dark: #0A1E35;
   --color-green: #16A36A;
   --color-green-light: #EAF6EF;
-  --color-light-grey: #F3F6FA;
+  --color-light-grey: #F4F7FA;
   --color-blue-light: #EAF0F7;
   --color-charcoal: #202B38;
   --color-muted: #64748B;
@@ -27,7 +27,7 @@ body {
 }
 
 ::selection {
-  background-color: #12345A;
+  background-color: #102D4D;
   color: #FFFFFF;
 }
 
@@ -39,7 +39,7 @@ body {
 
 /* Restrained typography styles */
 h1, h2, h3, h4, h5, h6 {
-  color: #12345A;
+  color: #102D4D;
   letter-spacing: -0.02em;
 }
 
@@ -57,5 +57,5 @@ h1, h2, h3, h4, h5, h6 {
 
 .institutional-card:hover {
   border-color: #CBD5E1;
-  box-shadow: 0 8px 24px 0 rgba(18, 52, 90, 0.06);
+  box-shadow: 0 8px 24px 0 rgba(16, 45, 77, 0.06);
 }
