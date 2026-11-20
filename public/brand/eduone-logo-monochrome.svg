@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 90" width="100%" height="100%" fill="none" role="img" aria-label="EDUONE – Complete School Solutions">
+  <title>EDUONE – Complete School Solutions</title>
+  <g transform="translate(4, 9) scale(0.52)">
+  <g id="eduone-emblem">
+    <!-- Isometric "E" Book Base -->
+    <polygon points="113,54 112,67 66,89 38,79 37,94 70,111 113,90 113,106 68,129 20,107 20,57 66,73" fill="#1F2937" />
+    <!-- Floating Middle Book Page Bar -->
+    <polygon points="106,79 112,81 74,99 75,94" fill="#1F2937" />
+    <!-- Graduation Mortarboard Diamond Cap -->
+    <polygon points="68,10 128,35 68,62 8,39" fill="#1F2937" />
+    <!-- Graduation Cap Tassel -->
+    <line x1="128" y1="35" x2="128" y2="57" stroke="#1F2937" stroke-width="3" stroke-linecap="round" />
+    <rect x="124" y="57" width="8" height="18" rx="3.5" fill="#1F2937" />
+  </g>
+  </g>
+  <line x1="90" y1="20" x2="90" y2="70" stroke="#1F2937" stroke-width="1.5" stroke-linecap="round" />
+  <text x="106" y="48" font-family="'Manrope', 'Inter', -apple-system, sans-serif" font-size="36" font-weight="800" fill="#1F2937" letter-spacing="-0.02em">
+    EDUONE
+  </text>
+  <text x="106" y="68" font-family="'Manrope', 'Inter', -apple-system, sans-serif" font-size="10.5" font-weight="500" fill="#1F2937" letter-spacing="0.16em">Complete School Solutions</text>
+</svg>

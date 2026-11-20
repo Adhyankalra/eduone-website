@@ -2,6 +2,7 @@ export const SITE_CONFIG = {
   name: "EDUONE",
   fullName: "EDUONE – Complete School Solutions",
   descriptor: "COMPLETE SCHOOL SOLUTIONS",
+  motto: "LEARN • EQUIP • EXCEL",
   tagline: "Everything Your School Needs, Under One Roof.",
   positioning:
     "One reliable partner for your school's procurement, infrastructure, technology and ongoing support requirements.",

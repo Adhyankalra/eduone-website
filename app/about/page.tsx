@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import SectionHeading from "@/components/SectionHeading";
 import CTASection from "@/components/CTASection";
+import Logo from "@/components/Logo";
 import { SITE_CONFIG } from "@/lib/constants";
 
 export const metadata = {
@@ -112,13 +113,11 @@ export default function AboutPage() {
                   />
                   <div className="absolute inset-0 bg-edu-navy/10" />
                 </div>
-                <div className="p-4 bg-white border-t border-edu-border">
-                  <div className="text-xs font-bold text-edu-navy">
-                    Serving Private K-12 Institutions
-                  </div>
-                  <div className="text-[11px] text-edu-muted mt-0.5">
-                    Coordinated solutions across Delhi, Gurugram, Noida, Faridabad & Ghaziabad
-                  </div>
+                <div className="p-4 bg-white border-t border-edu-border flex items-center justify-between">
+                  <Logo variant="primary" size="sm" asLink href="/" />
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-edu-green bg-edu-green-light px-2.5 py-1 rounded border border-edu-green/20">
+                    LEARN • EQUIP • EXCEL
+                  </span>
                 </div>
               </div>
             </div>

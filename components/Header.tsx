@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Logo from "@/components/Logo";
 import {
   ChevronDown,
   Menu,
@@ -93,24 +94,8 @@ export default function Header() {
       <header className="sticky top-0 z-50 bg-white border-b border-edu-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
-            {/* Logo */}
-            <Link
-              href="/"
-              className="flex items-center gap-3 group focus:outline-none"
-              aria-label="EDUONE Home"
-            >
-              <div className="w-10 h-10 rounded-btn bg-edu-navy text-white flex items-center justify-center font-bold text-lg tracking-tight border border-edu-navy">
-                E<span className="text-edu-green">1</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-2xl font-black text-edu-navy tracking-tight leading-none">
-                  EDU<span className="text-edu-green">ONE</span>
-                </span>
-                <span className="text-[9px] font-semibold tracking-[0.2em] text-edu-muted uppercase mt-1">
-                  Complete School Solutions
-                </span>
-              </div>
-            </Link>
+            {/* Official Brand Logo */}
+            <Logo variant="primary" size="md" asLink href="/" />
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-8">

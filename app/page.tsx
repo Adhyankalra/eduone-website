@@ -19,6 +19,7 @@ import SectionHeading from "@/components/SectionHeading";
 import ServiceCard from "@/components/ServiceCard";
 import ProcessTimeline from "@/components/ProcessTimeline";
 import CTASection from "@/components/CTASection";
+import Logo from "@/components/Logo";
 import { SITE_CONFIG, SOLUTIONS, TARGET_INSTITUTIONS } from "@/lib/constants";
 
 export default function HomePage() {
@@ -110,9 +111,7 @@ export default function HomePage() {
                   <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-none p-4 rounded-btn border border-edu-border shadow-subtle">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-btn bg-edu-navy text-white flex items-center justify-center shrink-0">
-                          <Building2 className="w-4 h-4 text-edu-green" />
-                        </div>
+                        <Logo variant="icon-squircle" size="sm" />
                         <div>
                           <div className="text-xs font-bold text-edu-navy">
                             Institutional Desk • Delhi NCR

@@ -12,6 +12,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import ContactForm from "@/components/ContactForm";
+import Logo from "@/components/Logo";
 import { SITE_CONFIG } from "@/lib/constants";
 
 export const metadata = {
@@ -87,6 +88,9 @@ export default function ContactPage() {
               
               {/* Direct Office Box */}
               <div className="institutional-card p-6 sm:p-8 bg-white border border-edu-border space-y-6">
+                <div className="pb-4 border-b border-edu-border">
+                  <Logo variant="primary" size="sm" asLink href="/" />
+                </div>
                 <div>
                   <h3 className="text-xl font-bold text-edu-navy font-heading">
                     Official Institutional Contact

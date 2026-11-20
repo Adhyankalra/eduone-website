@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Logo from "@/components/Logo";
 import {
   ShieldCheck,
   Mail,
@@ -296,8 +297,8 @@ export default function PrivacyPolicyPage() {
                 please contact our institutional coordination desk:
               </p>
 
-              <div className="p-5 bg-edu-light-grey rounded-btn border border-edu-border space-y-2 text-xs sm:text-sm text-edu-charcoal">
-                <div className="font-bold text-edu-navy text-base">EDUONE – Complete School Solutions</div>
+              <div className="p-5 bg-edu-light-grey rounded-btn border border-edu-border space-y-3 text-xs sm:text-sm text-edu-charcoal">
+                <Logo variant="primary" size="sm" asLink href="/" />
                 <div className="flex items-center gap-2">
                   <Mail className="w-4 h-4 text-edu-green shrink-0" />
                   <span>Official Email: </span>

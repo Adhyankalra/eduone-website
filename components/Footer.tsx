@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Logo from "@/components/Logo";
 import {
   Phone,
   Mail,
@@ -67,19 +68,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
           {/* Brand & Description */}
           <div className="lg:col-span-2 space-y-4">
-            <Link href="/" className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-btn bg-white text-edu-navy flex items-center justify-center font-bold text-base">
-                E<span className="text-edu-green">1</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xl font-black text-white tracking-tight font-heading">
-                  EDU<span className="text-edu-green">ONE</span>
-                </span>
-                <span className="text-[9px] font-semibold tracking-[0.2em] text-slate-400 uppercase">
-                  Complete School Solutions
-                </span>
-              </div>
-            </Link>
+            <Logo variant="dark" size="md" asLink href="/" />
 
             <p className="text-sm text-slate-300 leading-relaxed max-w-sm">
               {SITE_CONFIG.shortDescription} We coordinate products, vetted suppliers,

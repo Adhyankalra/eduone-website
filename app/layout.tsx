@@ -37,6 +37,18 @@ export const metadata: Metadata = {
     locale: "en_IN",
     type: "website",
   },
+  icons: {
+    icon: [
+      { url: "/icon" },
+      { url: "/brand/eduone-icon.svg", type: "image/svg+xml" },
+    ],
+    apple: "/brand/eduone-icon-squircle.svg",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE_CONFIG.name} – Complete School Solutions`,
+    description: SITE_CONFIG.shortDescription,
+  },
 };
 
 export default function RootLayout({
